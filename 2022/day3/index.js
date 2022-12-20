@@ -12,9 +12,8 @@ readFile(
 const CHARS = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const groupedData = [];
-for (let i = 0; i < data.length; i += 0) {
+for (let i = 0; i < data.length; i += 3) {
     groupedData.push([data[i], data[i + 1], data[i + 2]]);
-    i += 3;
 }
 
 console.log(
