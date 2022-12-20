@@ -1,0 +1,36 @@
+const { readFile } = require("../../readFileMac");
+
+let data = [];
+readFile(
+    "2022/day4/input.txt",
+    (fileData) => {
+        data = fileData;
+    },
+    (err) => console.log(err)
+);
+
+const groupedData = [];
+data.forEach((line) => {
+    const [left, right] = line.split(",");
+    const [leftStart, leftEnd] = left.split("-");
+    const [rightStart, rightEnd] = right.split("-");
+    groupedData.push({
+        leftStart: Number(leftStart),
+        leftEnd: Number(leftEnd),
+        rightStart: Number(rightStart),
+        rightEnd: Number(rightEnd),
+    });
+});
+
+console.log(
+    groupedData.reduce((acc, group) => {
+        let num = 0;
+        const { leftStart, leftEnd, rightStart, rightEnd } = group;
+        if (leftStart <= rightStart && leftEnd >= rightEnd) {
+            num = 1;
+        } else if (rightStart <= leftStart && rightEnd >= leftEnd) {
+            num = 1;
+        }
+        return acc + num;
+    }, 0)
+);
