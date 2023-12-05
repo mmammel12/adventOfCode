@@ -2,7 +2,6 @@ const fs = require("fs");
 
 const readFile = (path, callback, errorCallback) => {
     try {
-        console.log(`${__dirname}/${path}`);
         const data = fs.readFileSync(`${__dirname}/${path}`, "utf-8");
         if (callback != null) callback(data.split("\n"));
     } catch (err) {
