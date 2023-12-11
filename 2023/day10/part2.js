@@ -70,19 +70,19 @@ const findLoop = (startingPoint, map) => {
     let directions;
     let previousDirection;
     let currentPoint;
-    if (northPointSymbol !== '.' && northPointSymbol !== null) {
+    if (northPointSymbol !== null) {
         currentPoint = { x: startingPoint.x, y: startingPoint.y - 1 };
         directions = getDirection(startingPoint.x, startingPoint.y - 1, map);
         previousDirection = 'S';
-    } else if (eastPointSymbol !== '.' && eastPointSymbol !== null) {
+    } else if (eastPointSymbol !== null) {
         currentPoint = { x: startingPoint.x + 1, y: startingPoint.y };
         directions = getDirection(startingPoint.x + 1, startingPoint.y, map);
         previousDirection = 'W';
-    } else if (southPointSymbol !== '.' && southPointSymbol !== null) {
+    } else if (southPointSymbol !== null) {
         currentPoint = { x: startingPoint.x, y: startingPoint.y + 1 };
         directions = getDirection(startingPoint.x, startingPoint.y + 1, map);
         previousDirection = 'N';
-    } else if (westPointSymbol !== '.' && westPointSymbol !== null) {
+    } else if (westPointSymbol !== null) {
         currentPoint = { x: startingPoint.x - 1, y: startingPoint.y };
         directions = getDirection(startingPoint.x - 1, startingPoint.y, map);
         previousDirection = 'E';
@@ -114,8 +114,6 @@ const findLoop = (startingPoint, map) => {
         if (map[currentPoint.y][currentPoint.x] !== STARTING_POINT) {
             directions = getDirection(currentPoint.x, currentPoint.y, map);
             direction = directions.find((direction) => direction !== previousDirection);
-        } else {
-            visited[`${currentPoint.x},${currentPoint.y}`].end = true;
         }
     }
 
@@ -172,4 +170,4 @@ const map = [...data].reduce((acc, row, y) => {
     return acc;
 }, []);
 
-fs.writeFileSync('2023/day10/test2Map.txt', map.join('\n'));
+fs.writeFileSync('2023/day10/map.txt', map.join('\n'));

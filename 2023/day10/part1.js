@@ -1,6 +1,6 @@
 const { getFileData } = require('../../readFile');
 
-const data = getFileData('2023/day10/input.txt');
+const data = getFileData('2023/day10/test.txt');
 
 const STARTING_POINT = 'S';
 
@@ -31,10 +31,27 @@ const getStartingPoint = (map) => {
 const startingPoint = getStartingPoint(data);
 
 // determine which 2 directions connect to the starting point
-const northPointSymbol = startingPoint.y > 0 ? data[startingPoint.y - 1][startingPoint.x] : null;
-const eastPointSymbol = startingPoint.x < data[0].length - 1 ? data[startingPoint.y][startingPoint.x + 1] : null;
-const southPointSymbol = startingPoint.y < data.length - 1 ? data[startingPoint.y + 1][startingPoint.x] : null;
-const westPointSymbol = startingPoint.x > 0 ? data[startingPoint.y][startingPoint.x - 1] : null;
+const VALID_NORTH_STARTING_SYMBOL = ['|', '7', 'F'];
+const VALID_EAST_STARTING_SYMBOL = ['-', '7', 'J'];
+const VALID_SOUTH_STARTING_SYMBOL = ['|', 'L', 'J'];
+const VALID_WEST_STARTING_SYMBOL = ['-', 'L', 'F'];
+
+const northPointSymbol =
+    startingPoint.y > 0 && VALID_NORTH_STARTING_SYMBOL.includes(data[startingPoint.y - 1][startingPoint.x])
+        ? data[startingPoint.y - 1][startingPoint.x]
+        : null;
+const eastPointSymbol =
+    startingPoint.x < data[0].length - 1 && VALID_EAST_STARTING_SYMBOL.includes(data[startingPoint.y][startingPoint.x + 1])
+        ? data[startingPoint.y][startingPoint.x + 1]
+        : null;
+const southPointSymbol =
+    startingPoint.y < data.length - 1 && VALID_SOUTH_STARTING_SYMBOL.includes(data[startingPoint.y + 1][startingPoint.x])
+        ? data[startingPoint.y + 1][startingPoint.x]
+        : null;
+const westPointSymbol =
+    startingPoint.x > 0 && VALID_WEST_STARTING_SYMBOL.includes(data[startingPoint.y][startingPoint.x - 1])
+        ? data[startingPoint.y][startingPoint.x - 1]
+        : null;
 
 const getPreviousDirection = (selectedDirection) => {
     switch (selectedDirection) {
@@ -53,19 +70,19 @@ const findLoop = (startingPoint, map) => {
     let directions;
     let previousDirection;
     let currentPoint;
-    if (northPointSymbol !== '.' && northPointSymbol !== null) {
+    if (northPointSymbol !== null) {
         currentPoint = { x: startingPoint.x, y: startingPoint.y - 1 };
         directions = getDirection(startingPoint.x, startingPoint.y - 1, map);
         previousDirection = 'S';
-    } else if (eastPointSymbol !== '.' && eastPointSymbol !== null) {
+    } else if (eastPointSymbol !== null) {
         currentPoint = { x: startingPoint.x + 1, y: startingPoint.y };
         directions = getDirection(startingPoint.x + 1, startingPoint.y, map);
         previousDirection = 'W';
-    } else if (southPointSymbol !== '.' && southPointSymbol !== null) {
+    } else if (southPointSymbol !== null) {
         currentPoint = { x: startingPoint.x, y: startingPoint.y + 1 };
         directions = getDirection(startingPoint.x, startingPoint.y + 1, map);
         previousDirection = 'N';
-    } else if (westPointSymbol !== '.' && westPointSymbol !== null) {
+    } else if (westPointSymbol !== null) {
         currentPoint = { x: startingPoint.x - 1, y: startingPoint.y };
         directions = getDirection(startingPoint.x - 1, startingPoint.y, map);
         previousDirection = 'E';
@@ -97,8 +114,6 @@ const findLoop = (startingPoint, map) => {
         if (map[currentPoint.y][currentPoint.x] !== STARTING_POINT) {
             directions = getDirection(currentPoint.x, currentPoint.y, map);
             direction = directions.find((direction) => direction !== previousDirection);
-        } else {
-            visited[`${currentPoint.x},${currentPoint.y}`].end = true;
         }
     }
 
