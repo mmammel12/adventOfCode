@@ -1,15 +1,12 @@
-// Package day1 -
 package day1
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 // Part2 -
-func Part2(data string) error {
-	lines := strings.Split(data, "\n")
+func Part2(lines []string) (int, error) {
 	left := make([]int, len(lines)-1)
 	right := make([]int, len(lines)-1)
 	for i, line := range lines {
@@ -20,7 +17,7 @@ func Part2(data string) error {
 		}
 		rightNum, err := strconv.Atoi(nums[1])
 		if err != nil {
-			return err
+			return 0, err
 		}
 		left[i] = leftNum
 		right[i] = rightNum
@@ -42,7 +39,5 @@ func Part2(data string) error {
 		}
 	}
 
-	fmt.Printf("sum: %v\n", sum)
-
-	return nil
+	return sum, nil
 }
