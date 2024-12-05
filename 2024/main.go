@@ -31,7 +31,7 @@ func main() {
 	commandName := fmt.Sprintf("%v-%v", args[1], args[2])
 
 	if fn, exists := commands[commandName]; exists {
-		ans, err := fn(lines)
+		ans, err := fn(lines[:len(lines)-1])
 		if err != nil {
 			fmt.Printf("Error in part 1: %v", err)
 			os.Exit(1)
