@@ -49,7 +49,7 @@ func Part1(lines []string) (int, error) {
 		}
 	}
 
-	for true {
+	for {
 		direction := guardDirections[guard]
 		if guardRow+direction[0] < 0 || guardCol+direction[1] < 0 || guardRow+direction[0] >= len(lines) || guardCol+direction[1] >= len(lines[0]) {
 			break

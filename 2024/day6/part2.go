@@ -10,7 +10,7 @@ func checkLoop(lines []string, guardRow, guardCol, obsRow, obsCol int, guard run
 	guardDirections, guardTurns, _ := createGuardData()
 	path := make(map[string]rune)
 
-	for true {
+	for {
 		direction := guardDirections[guard]
 		if guardRow+direction[0] < 0 || guardCol+direction[1] < 0 || guardRow+direction[0] >= len(lines) || guardCol+direction[1] >= len(lines[0]) {
 			break
@@ -58,7 +58,7 @@ func Part2(lines []string) (int, error) {
 	guardStartCol := guardCol
 	guardStart := guard
 
-	for true {
+	for {
 		direction := guardDirections[guard]
 		path = append(path, [2]int{guardRow, guardCol})
 

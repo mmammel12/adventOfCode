@@ -15,8 +15,10 @@ func main() {
 	}
 
 	fileName := "input.txt"
-	if len(args) == 4 && args[3] == "t" {
+	if len(args) == 4 {
 		fileName = "test.txt"
+	} else if len(args) == 5 {
+		fileName = fmt.Sprintf("test%v.txt", args[4])
 	}
 	path := fmt.Sprintf("./day%v/%v", args[1], fileName)
 	data, err := os.ReadFile(path)
