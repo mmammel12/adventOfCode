@@ -19,6 +19,12 @@ type Location struct {
 	Col int
 }
 
+// Point -
+type Point struct {
+	X int
+	Y int
+}
+
 // Direction -
 type Direction struct {
 	Row        int
