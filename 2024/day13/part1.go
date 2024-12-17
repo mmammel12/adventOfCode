@@ -5,14 +5,11 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/mmammel12/adventOfCode/2024/utils"
 )
 
-type point struct {
-	x int
-	y int
-}
-
-func getInputs(lines []string, targetOffset int) (a point, b point, target point) {
+func getInputs(lines []string, targetOffset int) (a utils.Point, b utils.Point, target utils.Point) {
 	xButtonRegex := `X\+\d+`
 	yButtonRegex := `Y\+\d+`
 	xTargetRegex := `X=\d+`
@@ -26,19 +23,19 @@ func getInputs(lines []string, targetOffset int) (a point, b point, target point
 	ax, _ := strconv.Atoi(axStr)
 	ayStr, _ := strings.CutPrefix(yb.FindString(lines[0]), "Y+")
 	ay, _ := strconv.Atoi(ayStr)
-	a = point{x: ax, y: ay}
+	a = utils.Point{X: ax, Y: ay}
 
 	bxStr, _ := strings.CutPrefix(xb.FindString(lines[1]), "X+")
 	bx, _ := strconv.Atoi(bxStr)
 	byStr, _ := strings.CutPrefix(yb.FindString(lines[1]), "Y+")
 	by, _ := strconv.Atoi(byStr)
-	b = point{x: bx, y: by}
+	b = utils.Point{X: bx, Y: by}
 
 	txStr, _ := strings.CutPrefix(xt.FindString(lines[2]), "X=")
 	tx, _ := strconv.Atoi(txStr)
 	tyStr, _ := strings.CutPrefix(yt.FindString(lines[2]), "Y=")
 	ty, _ := strconv.Atoi(tyStr)
-	target = point{x: tx + targetOffset, y: ty + targetOffset}
+	target = utils.Point{X: tx + targetOffset, Y: ty + targetOffset}
 
 	return a, b, target
 }
@@ -61,9 +58,9 @@ func findSingleAxisSolutions(aMove, bmove, target int) [][]int {
 	return solutions
 }
 
-func findMinPrice(a, b, target point) int {
-	xSolutions := findSingleAxisSolutions(a.x, b.x, target.x)
-	ySolutions := findSingleAxisSolutions(a.y, b.y, target.y)
+func findMinPrice(a, b, target utils.Point) int {
+	xSolutions := findSingleAxisSolutions(a.X, b.X, target.X)
+	ySolutions := findSingleAxisSolutions(a.Y, b.Y, target.Y)
 
 	solutions := make([]int, 0)
 	for _, xSolution := range xSolutions {
